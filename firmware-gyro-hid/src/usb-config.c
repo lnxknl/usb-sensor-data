@@ -191,7 +191,7 @@ void usb_in_ep1() {
 #endif
 
 #ifdef EN_EP2IN
-void usb_in_ep2() {
+void usb_in_ep2() {// @NOTE 
     uint8_t csr;
 
     usb_write_reg(INDEX, 2);
@@ -250,8 +250,8 @@ void usb_in_ep5() {
 }
 #endif
 
-#ifdef EN_EP1OUT
-void usb_out_ep1() {
+#ifdef EN_EP1OUTm
+void usb_out_ep1() {// @NOTE 
     uint8_t csr;
 
     usb_write_reg(INDEX, 1);
@@ -320,7 +320,7 @@ void usb_out_ep5() {
         usb_write_reg(OUTCSR1, OUTCLRDT);
     }
     if (csr & OUTOPRDY) {
-        usb_bulk_intr_out(Ep5OutBuffer, 5);
+        usb_bulk_intr_out(Ep5OutBuffer, 5);// @NOTE 
     }
 }
 #endif

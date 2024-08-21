@@ -1013,7 +1013,7 @@ __xdata volatile unsigned char  __at(0xf944) PWMA_CCR6L       ;
 #define     FRAME1                  (USBBASE + 12)
 #define     FRAME2                  (USBBASE + 13)
 #define     INDEX                   (USBBASE + 14)
-#define     INMAXP                  (USBBASE + 16)
+#define     INMAXP                  (USBBASE + 16)// @NOTE 
 #define     CSR0                    (USBBASE + 17)
 #define     SSUEND                  0x80
 #define     SOPRDY                  0x40
@@ -1024,7 +1024,7 @@ __xdata volatile unsigned char  __at(0xf944) PWMA_CCR6L       ;
 #define     IPRDY                   0x02
 #define     OPRDY                   0x01
 #define     INCSR1                  (USBBASE + 17)
-#define     INCLRDT                 0x40
+#define     INCLRDT                 0x40// @NOTE 
 #define     INSTSTL                 0x20
 #define     INSDSTL                 0x10
 #define     INFLUSH                 0x08
@@ -1039,7 +1039,7 @@ __xdata volatile unsigned char  __at(0xf944) PWMA_CCR6L       ;
 #define     INENDMA                 0x10
 #define     INFCDT                  0x08
 #define     OUTMAXP                 (USBBASE + 19)
-#define     OUTCSR1                 (USBBASE + 20)
+#define     OUTCSR1                 (USBBASE + 20)// @NOTE 
 #define     OUTCLRDT                0x80
 #define     OUTSTSTL                0x40
 #define     OUTSDSTL                0x20

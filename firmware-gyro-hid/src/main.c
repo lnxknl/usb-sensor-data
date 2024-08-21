@@ -53,21 +53,21 @@ struct hid_report {
     vec3_t gyro;
 } hid_report;
 
-void usb_class_in() {
+void usb_class_in() {// @NOTE 
     if (DeviceState != DEVSTATE_CONFIGURED) return;
 
     struct hid_report *r = (struct hid_report *)hidbuf;
     r->tempstamp = sys_count;
-    lsm6ds3tr_temp_read(&(r->temperature));
+    lsm6ds3tr_temp_read(&(r->temperature));// @NOTE 
     lsm6ds3tr_accel_read(&(r->accel));
     lsm6ds3tr_gyro_read(&(r->gyro));
 
     IE2 &= ~0x80; // EUSB = 0;
     usb_write_reg(INDEX, 1);
     for (uint8_t i = 0; i < 16; i++) {
-        usb_write_reg(FIFO1, hidbuf[i]);
+        usb_write_reg(FIFO1, hidbuf[i]);// @NOTE , send info via usb
     }
-    usb_write_reg(INCSR1, INIPRDY);
+    usb_write_reg(INCSR1, INIPRDY);// @NOTE 
     IE2 |= 0x80; // EUSB = 1;
 }
 

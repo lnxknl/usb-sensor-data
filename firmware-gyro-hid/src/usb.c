@@ -13,7 +13,7 @@ epstate_t data Ep0State;
 uint8_t data InEpState;
 uint8_t data OutEpState;
 
-void usb_init() {
+void usb_init() {// @NOTE 
     P3M0 &= ~0x03;
     P3M1 |= 0x03;
 
@@ -61,7 +61,7 @@ void usb_write_fifo(uint8_t fifo, uint8_t *pdat, uint8_t cnt) {
     }
 }
 
-void usb_isr() interrupt(USB_VECTOR) using(1) {
+void usb_isr() interrupt(USB_VECTOR) using(1) {// @NOTE 
     CONFIG_HANDLE_USB_ISR_START();
     uint8_t intrusb;
     uint8_t intrin;
@@ -74,7 +74,7 @@ void usb_isr() interrupt(USB_VECTOR) using(1) {
     if (intrusb & RSUIF) usb_resume();
     if (intrusb & RSTIF) usb_reset();
 
-    if (intrin & EP0IF) usb_setup();
+    if (intrin & EP0IF) usb_setup();// @NOTE 
 
 #ifdef EN_EP1IN
     if (intrin & EP1INIF) usb_in_ep1();
@@ -164,7 +164,7 @@ void usb_reset() {
 
 void usb_suspend() {}
 
-void usb_setup() {
+void usb_setup() {// @NOTE 
     uint8_t csr;
 
     usb_write_reg(INDEX, 0);
@@ -201,7 +201,7 @@ void usb_setup() {
         }
         break;
     case EPSTATE_DATAIN:
-        usb_ctrl_in();
+        usb_ctrl_in();// @NOTE 
         break;
     case EPSTATE_DATAOUT:
         usb_ctrl_out();
@@ -239,7 +239,7 @@ void usb_ctrl_in() {
     if (csr & IPRDY) return;
 
     cnt = Ep0State.wSize > EP0_SIZE ? EP0_SIZE : Ep0State.wSize;
-    usb_write_fifo(FIFO0, Ep0State.pData, cnt);
+    usb_write_fifo(FIFO0, Ep0State.pData, cnt);// @NOTE 
     Ep0State.wSize -= cnt;
     Ep0State.pData += cnt;
     if (Ep0State.wSize == 0) {
@@ -270,11 +270,11 @@ void usb_ctrl_out() {
 }
 
 void usb_bulk_intr_in(uint8_t *pData, uint8_t bSize, uint8_t ep) {
-    usb_write_fifo((uint8_t)(FIFO0 + ep), pData, bSize);
+    usb_write_fifo((uint8_t)(FIFO0 + ep), pData, bSize);// @NOTE 
     usb_write_reg(INCSR1, INIPRDY);
 }
 
-uint8_t usb_bulk_intr_out(uint8_t *pData, uint8_t ep) {
+uint8_t usb_bulk_intr_out(uint8_t *pData, uint8_t ep) {// @NOTE 
     uint8_t cnt;
 
     cnt = usb_read_fifo((uint8_t)(FIFO0 + ep), pData);
